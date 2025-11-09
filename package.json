@@ -1,0 +1,72 @@
+{
+  "name": "@rhymiz/simple-tasks",
+  "version": "0.1.0",
+  "description": "Thin, function-based task framework on top of BullMQ for TypeScript.",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "bullmq",
+    "queue",
+    "worker",
+    "tasks",
+    "typescript",
+    "bun",
+    "node"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhymiz/simple-tasks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rhymiz/simple-tasks/issues"
+  },
+  "homepage": "https://github.com/rhymiz/simple-tasks#readme",
+  "engines": {
+    "node": ">=18",
+    "bun": ">=1.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime.d.ts",
+      "import": "./dist/runtime.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build:js": "bun build ./src/index.ts ./src/runtime.ts --outdir dist --target node --format esm --external bullmq --sourcemap",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build": "bun run clean && bun run build:js && bun run build:types",
+    "lint": "eslint . --ext .ts,.tsx",
+    "prepare": "bun run build",
+    "pack": "npm pack",
+    "release:dry": "npm publish --dry-run"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "typescript": "^5.5.0"
+  },
+  "peerDependencies": {
+    "bullmq": ">=4.0.0 <6.0.0"
+  }
+}
