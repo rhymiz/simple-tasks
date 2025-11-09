@@ -57,7 +57,6 @@
     "version:major": "npm version major"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
     "access": "public"
   },
   "sideEffects": false,
