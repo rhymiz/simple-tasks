@@ -62,13 +62,49 @@ The framework passes connection options to BullMQ (host/port). Configure via env
 
 BullMQ manages its own clients; this package does not import `ioredis` directly.
 
-## Scripts
+## Development
 
 This package is built with Bun.
 
 ```bash
 bun run build           # build JS and .d.ts into dist/
-npm publish             # publish to npm (build runs via prepare)
+bun run lint            # run linter
+bun run pack            # create tarball for testing
+```
+
+## Releasing
+
+This project uses automated releases via GitHub Actions.
+
+### Manual Release Process
+
+1. **Bump version** (creates a git tag automatically):
+   ```bash
+   bun run version:patch   # 0.1.0 -> 0.1.1 (bug fixes)
+   bun run version:minor   # 0.1.0 -> 0.2.0 (new features)
+   bun run version:major   # 0.1.0 -> 1.0.0 (breaking changes)
+   ```
+
+2. **Push the tag** to trigger the release:
+   ```bash
+   git push --follow-tags
+   ```
+
+3. The GitHub Action will automatically:
+   - Create a GitHub Release
+   - Build the package
+   - Publish to GitHub Package Registry
+
+### Using the Package
+
+To install from GitHub Packages, add to your `.npmrc`:
+```
+@rhymiz:registry=https://npm.pkg.github.com
+```
+
+Then install:
+```bash
+bun install @rhymiz/simple-tasks bullmq
 ```
 
 ## License
