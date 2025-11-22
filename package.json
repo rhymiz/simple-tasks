@@ -1,6 +1,6 @@
 {
   "name": "@rhymiz/simple-tasks",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Thin, function-based task framework on top of BullMQ for TypeScript.",
   "license": "MIT",
   "type": "module",
