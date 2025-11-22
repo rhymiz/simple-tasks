@@ -1,0 +1,49 @@
+# Source files (not needed in published package)
+src/
+
+# Development and build configuration
+.github/
+tsconfig.json
+tsconfig.build.json
+eslint.config.js
+*.tsbuildinfo
+
+# Documentation and setup guides (not needed by users)
+CLAUDE.md
+TRUSTED_PUBLISHING_SETUP.md
+npm-publish.plan.md
+
+# Git files
+.git/
+.gitignore
+
+# IDE files
+.idea/
+.vscode/
+.DS_Store
+
+# Test files
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+coverage/
+
+# Logs and cache
+logs/
+*.log
+.eslintcache
+.cache
+
+# Dependencies
+node_modules/
+
+# Bun lockfile (users will have their own)
+bun.lock
+
+# Build artifacts that should be excluded
+*.tgz
+
+# Environment files
+.env*
+

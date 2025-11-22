@@ -5,7 +5,7 @@ Function-based task framework on top of BullMQ. Define tasks with a single funct
 ## Install
 
 ```bash
-bun install simple-tasks bullmq
+bun install @rhymiz/simple-tasks bullmq
 ```
 
 Peer dependencies:
@@ -17,7 +17,7 @@ Define a task:
 
 ```ts
 // src/queues/email.ts
-import { defineTask } from 'simple-tasks';
+import { defineTask } from '@rhymiz/simple-tasks';
 
 type SendWelcomeData = { userId: string };
 
