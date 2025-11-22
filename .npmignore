@@ -47,3 +47,6 @@ bun.lock
 # Environment files
 .env*
 
+# Example directory (not needed in published package)
+example/
+
