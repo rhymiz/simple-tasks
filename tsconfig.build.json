@@ -2,11 +2,15 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
+    "module": "ESNext",
+    "moduleResolution": "node",
     "declaration": true,
-    "emitDeclarationOnly": true,
     "declarationMap": true,
+    "sourceMap": true,
     "outDir": "./dist",
-    "stripInternal": true
+    "stripInternal": true,
+    "verbatimModuleSyntax": false,
+    "allowImportingTsExtensions": false
   },
   "include": ["src/**/*.ts"]
 }
