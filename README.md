@@ -2,6 +2,9 @@
 
 Function-based task framework on top of BullMQ. Define tasks with a single function, enqueue them easily, and run all workers from one entrypoint.
 
+![NPM Version](https://img.shields.io/npm/v/@rhymiz/simple-tasks)
+
+
 ## Install
 
 ```bash
