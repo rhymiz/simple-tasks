@@ -30,7 +30,9 @@ export async function runAllWorkers(options: RunWorkersOptions = {}) {
       },
       {
         ...baseWorkerOptions(),
-        ...(def.workerOptions ?? {})
+        ...(def.workerOptions ?? {}),
+        // Bind this worker to the specific job name to avoid processing other tasks on the same queue.
+        name: def.jobName
       }
     );
 
@@ -56,5 +58,4 @@ export async function runAllWorkers(options: RunWorkersOptions = {}) {
 
   return workers;
 }
-
 

@@ -49,7 +49,7 @@ import './queues/email';
 import './queues/billing';
 import './queues/notifications';
 
-import { runAllWorkers } from 'simple-tasks/runtime';
+import { runAllWorkers } from '@rhymiz/simple-tasks/runtime';
 
 const onlyQueues = process.env.QUEUES?.split(',').filter(Boolean);
 const onlyJobs = process.env.JOBS?.split(',').filter(Boolean);
