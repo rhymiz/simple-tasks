@@ -25,8 +25,8 @@ import { defineTask } from '@rhymiz/simple-tasks';
 type SendWelcomeData = { userId: string };
 
 export const sendWelcomeEmail = defineTask<SendWelcomeData>({
-  queue: 'emails',
   name: 'send-welcome-email',
+  queuePrefix: 'emails',
   worker: { concurrency: 5 },
   defaultJobOptions: { attempts: 3 },
 }, async (data, job) => {
@@ -62,17 +62,18 @@ runAllWorkers({ onlyQueues, onlyJobs });
 The framework passes connection options to BullMQ (host/port). Configure via environment variables:
 - `REDIS_HOST` (default: `127.0.0.1`)
 - `REDIS_PORT` (default: `6379`)
+- `SIMPLE_TASKS_QUEUE_PREFIX` (optional, prepends to every queue name with `-`)
 
 BullMQ manages its own clients; this package does not import `ioredis` directly.
 
 ## Development
 
-This package is built with Bun.
+This package is built with TypeScript.
 
 ```bash
-bun run build           # build JS and .d.ts into dist/
-bun run lint            # run linter
-bun run pack            # create tarball for testing
+npm run build           # build JS and .d.ts into dist/
+npm run lint            # run linter
+npm run pack            # create tarball for testing
 ```
 
 ## Releasing

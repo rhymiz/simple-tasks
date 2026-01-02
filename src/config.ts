@@ -28,4 +28,8 @@ export function baseWorkerOptions(): WorkerOptions {
   return { connection: getConnectionOptions() };
 }
 
+export function defaultQueuePrefix(): string | undefined {
+  const prefix = process.env.SIMPLE_TASKS_QUEUE_PREFIX;
+  return prefix ? prefix : undefined;
+}
 

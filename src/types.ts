@@ -6,8 +6,8 @@ export type TaskHandler<Data, Result = unknown> = (
 ) => Promise<Result> | Result;
 
 export interface DefineTaskOptions {
-  queue: string;
   name: string;
+  queuePrefix?: string;
   defaultJobOptions?: JobsOptions;
   queueOptions?: QueueOptions;
   worker?: WorkerOptions;
@@ -32,5 +32,3 @@ export interface Task<Data, Result> {
   handler: TaskHandler<Data, Result>;
   enqueue: EnqueueFn<Data>;
 }
-
-

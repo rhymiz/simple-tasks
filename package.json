@@ -45,9 +45,9 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "bun run clean && tsc -p tsconfig.build.json",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
     "lint": "eslint . --ext .ts,.tsx",
-    "prepare": "bun run build",
+    "prepare": "npm run build",
     "pack": "npm pack",
     "release:dry": "npm publish --dry-run",
     "version:patch": "npm version patch",

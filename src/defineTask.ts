@@ -1,6 +1,7 @@
 import type { JobsOptions } from "bullmq";
 import { taskRegistry } from "./registry";
 import { getQueue } from "./queues";
+import { defaultQueuePrefix } from "./config";
 import type {
   DefineTaskOptions,
   Task,
@@ -13,12 +14,28 @@ export function defineTask<Data = unknown, Result = unknown>(
   handler: TaskHandler<Data, Result>
 ): Task<Data, Result> {
   const {
-    queue,
     name,
+    queuePrefix,
     defaultJobOptions,
     queueOptions,
     worker: workerOptions
   } = options;
+
+  const resolvedPrefix = queuePrefix ?? defaultQueuePrefix();
+  if (name.includes(":")) {
+    throw new Error('Task name cannot contain ":"');
+  }
+  if (resolvedPrefix?.includes(":")) {
+    throw new Error('Queue prefix cannot contain ":"');
+  }
+
+  const delimiter = "-";
+  const prefix = resolvedPrefix
+    ? resolvedPrefix.endsWith(delimiter)
+      ? resolvedPrefix
+      : `${resolvedPrefix}${delimiter}`
+    : "";
+  const queue = `${prefix}${name}`;
 
   const definition: TaskDefinition<Data, Result> = {
     queueName: queue,
@@ -49,5 +66,3 @@ export function defineTask<Data = unknown, Result = unknown>(
     enqueue
   };
 }
-
-
