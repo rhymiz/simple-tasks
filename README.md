@@ -59,7 +59,8 @@ runAllWorkers({ onlyQueues, onlyJobs });
 
 ## Configuration
 
-The framework passes connection options to BullMQ (host/port). Configure via environment variables:
+The framework passes Redis connection options to BullMQ. Configure via environment variables:
+- `REDIS_URL` (optional, takes precedence over host/port)
 - `REDIS_HOST` (default: `127.0.0.1`)
 - `REDIS_PORT` (default: `6379`)
 - `SIMPLE_TASKS_QUEUE_PREFIX` (optional, prepends to every queue name with `-`)

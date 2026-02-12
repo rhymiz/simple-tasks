@@ -3,6 +3,18 @@ import type { QueueOptions, WorkerOptions } from "bullmq";
 type BullConnectionOptions = QueueOptions["connection"];
 
 function getConnectionOptions(): BullConnectionOptions {
+  const url = process.env.REDIS_URL?.trim();
+  if (url) {
+    const connection = {
+      url,
+      // Commonly recommended for BullMQ to prevent request retry confusion
+      // when using blocking commands behind the scenes.
+      maxRetriesPerRequest: null
+    } as unknown as BullConnectionOptions;
+
+    return connection;
+  }
+
   const host = process.env.REDIS_HOST ?? "127.0.0.1";
   const portRaw = process.env.REDIS_PORT ?? "6379";
   const port = Number(portRaw);
@@ -32,4 +44,3 @@ export function defaultQueuePrefix(): string | undefined {
   const prefix = process.env.SIMPLE_TASKS_QUEUE_PREFIX;
   return prefix ? prefix : undefined;
 }
-
