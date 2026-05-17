@@ -12,7 +12,7 @@ bun install @rhymiz/simple-tasks bullmq
 ```
 
 Peer dependencies:
-- bullmq (>=4 <6)
+- bullmq (>=5 <6)
 
 ## Quick start
 
@@ -41,6 +41,19 @@ await sendWelcomeEmail.enqueue({ userId: '123' });
 await sendWelcomeEmail.enqueue({ userId: '123' }, { delay: 10_000 });
 ```
 
+Schedule recurring jobs with BullMQ v5 job schedulers:
+
+```ts
+await sendWelcomeEmail.schedule(
+  'daily-welcome-check',
+  { pattern: '0 9 * * *' },
+  { userId: '123' }
+);
+
+await sendWelcomeEmail.unschedule('daily-welcome-check');
+const schedule = await sendWelcomeEmail.getSchedule('daily-welcome-check');
+```
+
 Worker entrypoint:
 
 ```ts
@@ -67,14 +80,28 @@ The framework passes Redis connection options to BullMQ. Configure via environme
 
 BullMQ manages its own clients; this package does not import `ioredis` directly.
 
+## Migrating to v1
+
+Version 1 requires BullMQ 5. BullMQ 4 is no longer supported.
+
+Recurring jobs use BullMQ v5 job schedulers through `task.schedule(...)`,
+`task.unschedule(...)`, and `task.getSchedule(...)`. This package does not
+create or migrate legacy repeatable jobs. If you previously created repeatable
+jobs directly with BullMQ, remove or migrate those jobs before adding equivalent
+schedulers to avoid duplicate recurring work.
+
+One-off delayed jobs still use `task.enqueue(data, { delay })`.
+
 ## Development
 
 This package is built with TypeScript.
 
 ```bash
-npm run build           # build JS and .d.ts into dist/
-npm run lint            # run linter
-npm run pack            # create tarball for testing
+bun run build           # build JS and .d.ts into dist/
+bun run lint            # run linter
+bun run test            # run tests
+bun run test:e2e:scheduler # verify BullMQ v5 schedulers against local Redis
+bun run pack            # create tarball for testing
 ```
 
 ## Releasing

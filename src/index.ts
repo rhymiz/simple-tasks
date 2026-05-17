@@ -6,5 +6,10 @@ export type {
   TaskHandler,
   DefineTaskOptions,
   TaskDefinition,
-  EnqueueFn
+  EnqueueFn,
+  ScheduleFn,
+  UnscheduleFn,
+  GetScheduleFn,
+  ScheduleRepeatOptions,
+  ScheduleJobOptions
 } from "./types";

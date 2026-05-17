@@ -1,13 +1,33 @@
-import type { JobsOptions } from "bullmq";
+import type {
+  JobSchedulerJson,
+  JobSchedulerTemplateOptions,
+  JobsOptions
+} from "bullmq";
 import { taskRegistry } from "./registry";
 import { getQueue } from "./queues";
 import { defaultQueuePrefix } from "./config";
 import type {
   DefineTaskOptions,
+  ScheduleRepeatOptions,
   Task,
   TaskDefinition,
   TaskHandler
 } from "./types";
+
+function toSchedulerTemplateOptions(
+  options?: JobsOptions
+): JobSchedulerTemplateOptions {
+  const {
+    jobId: _jobId,
+    repeat: _repeat,
+    delay: _delay,
+    deduplication: _deduplication,
+    debounce: _debounce,
+    ...templateOptions
+  } = options ?? {};
+
+  return templateOptions;
+}
 
 export function defineTask<Data = unknown, Result = unknown>(
   options: DefineTaskOptions,
@@ -59,10 +79,37 @@ export function defineTask<Data = unknown, Result = unknown>(
     });
   };
 
+  const schedule = async (
+    id: string,
+    repeatOptions: ScheduleRepeatOptions,
+    data: Data,
+    jobOptions?: JobSchedulerTemplateOptions
+  ) => {
+    await queueInstance.upsertJobScheduler(id, repeatOptions, {
+      name,
+      data: data as unknown,
+      opts: {
+        ...toSchedulerTemplateOptions(defaultJobOptions),
+        ...toSchedulerTemplateOptions(jobOptions)
+      }
+    });
+  };
+
+  const unschedule = async (id: string) =>
+    queueInstance.removeJobScheduler(id);
+
+  const getSchedule = async (id: string) =>
+    queueInstance.getJobScheduler(id) as Promise<
+      JobSchedulerJson<Data> | undefined
+    >;
+
   return {
     queueName: queue,
     jobName: name,
     handler,
-    enqueue
+    enqueue,
+    schedule,
+    unschedule,
+    getSchedule
   };
 }

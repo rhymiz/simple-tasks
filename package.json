@@ -1,6 +1,6 @@
 {
   "name": "@rhymiz/simple-tasks",
-  "version": "0.2.5",
+  "version": "1.0.0",
   "description": "Thin, function-based task framework on top of BullMQ for TypeScript.",
   "license": "MIT",
   "type": "module",
@@ -45,9 +45,11 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc -p tsconfig.build.json",
-    "lint": "eslint . --ext .ts,.tsx",
-    "prepare": "npm run build",
+    "build": "bun run clean && bun ./node_modules/typescript/bin/tsc -p tsconfig.build.json",
+    "lint": "bun ./node_modules/eslint/bin/eslint.js . --ext .ts,.tsx",
+    "test": "bun test",
+    "test:e2e:scheduler": "bun scripts/scheduler-e2e.ts",
+    "prepare": "bun run build",
     "pack": "npm pack",
     "release:dry": "npm publish --dry-run",
     "version:patch": "npm version patch",
@@ -69,7 +71,7 @@
     "typescript": "^5.5.0"
   },
   "peerDependencies": {
-    "bullmq": ">=4.0.0 <6.0.0"
+    "bullmq": ">=5.0.0 <6.0.0"
   },
   "author": "rhymiz"
 }
