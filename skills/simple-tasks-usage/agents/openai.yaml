@@ -1,0 +1,4 @@
+interface:
+  display_name: "Simple Tasks Usage"
+  short_description: "Use @rhymiz/simple-tasks with BullMQ v5 in TypeScript projects."
+  default_prompt: "Help me define tasks, enqueue jobs, schedule recurring jobs, and run workers with @rhymiz/simple-tasks."
